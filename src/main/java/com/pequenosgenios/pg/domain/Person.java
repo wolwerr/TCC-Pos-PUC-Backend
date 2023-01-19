@@ -20,7 +20,6 @@ public abstract class Person {
     protected String name;
     protected String phone;
     protected String email;
-
     protected String cep;
     protected String street;
     protected Integer number;
@@ -28,4 +27,5 @@ public abstract class Person {
     protected String city;
     protected String state;
     protected String country;
+
 }

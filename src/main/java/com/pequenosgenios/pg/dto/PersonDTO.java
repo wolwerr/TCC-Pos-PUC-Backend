@@ -8,15 +8,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class PersonDTO {
-    protected Long id;
-    protected String name;
+   protected Long id;
+   protected String name;
+   protected String phone;
    protected String email;
-     protected String phone;
-     protected String cep;
-      protected String street;
-     protected Integer number;
-       protected String district;
-      protected String city;
-     protected String state;
-     protected String country;
+   protected String cep;
+   protected String street;
+   protected Integer number;
+   protected String district;
+   protected String city;
+   protected String state;
+   protected String country;
 }
