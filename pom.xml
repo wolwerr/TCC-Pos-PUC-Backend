@@ -12,7 +12,7 @@
     <artifactId>pg</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>pg</name>
-    <description>Projeto referente ao treinamento de aceleração de senioridade Dev for Tech by Acate e Gama Academy
+    <description>Projeto criado para o TCC da Puc Minas
     </description>
     <properties>
         <java.version>11</java.version>
