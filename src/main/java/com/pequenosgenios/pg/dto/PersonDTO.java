@@ -1,5 +1,6 @@
 package com.pequenosgenios.pg.dto;
 
+import com.pequenosgenios.pg.domain.Person;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class PersonDTO {
+public class PersonDTO {
    protected Long id;
    protected String name;
    protected String phone;
@@ -19,4 +20,18 @@ public abstract class PersonDTO {
    protected String city;
    protected String state;
    protected String country;
+
+   public PersonDTO(Person person) {
+        this.id = person.getId();
+        this.name = person.getName();
+        this.phone = person.getPhone();
+        this.email = person.getEmail();
+        this.cep = person.getCep();
+        this.street = person.getStreet();
+        this.number = person.getNumber();
+        this.district = person.getDistrict();
+        this.city = person.getCity();
+        this.state = person.getState();
+        this.country = person.getCountry();
+   }
 }

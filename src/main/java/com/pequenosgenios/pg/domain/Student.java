@@ -17,15 +17,17 @@ import javax.persistence.ManyToOne;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student extends Person {
+
     private Double fees;
     @ManyToOne
     @Cascade(CascadeType.ALL)
     private Class classe;
 
-    public Student(StudentDTO dto) {
-        super(dto.getId(), dto.getName(), dto.getPhone(), dto.getEmail(), dto.getCep(), dto.getStreet(), dto.getNumber(),
-                dto.getDistrict(), dto.getCity(), dto.getState(), dto.getCountry());
-        this.fees = dto.getFees();
+    public Student(StudentDTO studentDTO) {
+        super(studentDTO.getId(), studentDTO.getName(), studentDTO.getPhone(), studentDTO.getEmail(), studentDTO.getCep(), studentDTO.getStreet(),
+                studentDTO.getNumber(), studentDTO.getDistrict(), studentDTO.getCity(), studentDTO.getState(), studentDTO.getCountry());
+        this.fees = studentDTO.getFees();
     }
+
 
 }

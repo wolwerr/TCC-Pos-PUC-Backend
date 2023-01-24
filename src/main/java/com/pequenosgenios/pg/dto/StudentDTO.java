@@ -3,8 +3,10 @@ package com.pequenosgenios.pg.dto;
 import com.pequenosgenios.pg.domain.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,9 +19,4 @@ public class StudentDTO extends PersonDTO {
         this.fees = model.getFees();
     }
 
-    public StudentDTO(Long id, String name, String phone, String email, String cep, String street,
-                      Integer number, String district, String city, String state, String country, Double fees) {
-        super(id, name, phone, email, cep, street, number, district, city, state, country);
-        this.fees = fees;
-    }
 }

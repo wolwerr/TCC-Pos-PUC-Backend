@@ -12,11 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TeacherService {
     private final TeacherRepository teacherRepository;
-    private final AddressService addressService;
-
-    public TeacherService(TeacherRepository teacherRepository, AddressService addressService) {
+    public TeacherService(TeacherRepository teacherRepository) {
         this.teacherRepository = teacherRepository;
-        this.addressService = addressService;
     }
 
     @Transactional(rollbackFor = Exception.class)

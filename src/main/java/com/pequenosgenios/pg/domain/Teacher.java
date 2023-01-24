@@ -17,6 +17,7 @@ import javax.persistence.OneToOne;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Teacher extends Person {
+
     private Double salary;
     @OneToOne
     @Cascade(CascadeType.ALL)
@@ -27,5 +28,4 @@ public class Teacher extends Person {
                 dto.getDistrict(), dto.getCity(), dto.getState(), dto.getCountry());
         this.salary = dto.getSalary();
     }
-
 }

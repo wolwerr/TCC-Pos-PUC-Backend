@@ -1,5 +1,6 @@
 package com.pequenosgenios.pg.domain;
 
+import com.pequenosgenios.pg.dto.PersonDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class Person {
+public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
@@ -28,4 +29,17 @@ public abstract class Person {
     protected String state;
     protected String country;
 
+    public Person(PersonDTO personDTO) {
+        this.id = personDTO.getId();
+        this.name = personDTO.getName();
+        this.phone = personDTO.getPhone();
+        this.email = personDTO.getEmail();
+        this.cep = personDTO.getCep();
+        this.street = personDTO.getStreet();
+        this.number = personDTO.getNumber();
+        this.district = personDTO.getDistrict();
+        this.city = personDTO.getCity();
+        this.state = personDTO.getState();
+        this.country = personDTO.getCountry();
+    }
 }
