@@ -28,6 +28,4 @@ public class Student extends Person {
                 studentDTO.getNumber(), studentDTO.getDistrict(), studentDTO.getCity(), studentDTO.getState(), studentDTO.getCountry());
         this.fees = studentDTO.getFees();
     }
-
-
 }
