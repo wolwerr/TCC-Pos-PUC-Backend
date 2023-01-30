@@ -62,6 +62,7 @@ public class SecurityConfig {
                         .antMatchers("/swagger-ui/**").permitAll()
                         .antMatchers("/v3/**").permitAll()
                         .antMatchers("/h2-console/**").permitAll()
+                        .antMatchers("/class").permitAll()
                         .anyRequest().authenticated()
         );
 
@@ -75,9 +76,9 @@ public class SecurityConfig {
         System.out.println(this.URLS_FROTEND);
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(this.URLS_FROTEND);
-        configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT","PATCH", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
-        configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
+        configuration.setExposedHeaders(List.of("x-auth-token"));
 	final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
