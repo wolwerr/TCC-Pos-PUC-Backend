@@ -1,6 +1,8 @@
 package com.pequenosgenios.pg.resources;
 
+
 import com.pequenosgenios.pg.dto.UserDTO;
+import com.pequenosgenios.pg.repositories.UserRepository;
 import com.pequenosgenios.pg.services.impl.UserDetailsServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,9 +16,12 @@ import java.net.URI;
 @RequestMapping("/user")
 public class UserResource {
     private final UserDetailsServiceImpl userDetailsServiceImpl;
+    private final UserRepository userRepository;
 
-    public UserResource(UserDetailsServiceImpl userDetailsServiceImpl) {
+    public UserResource(UserDetailsServiceImpl userDetailsServiceImpl,
+                        UserRepository userRepository) {
         this.userDetailsServiceImpl = userDetailsServiceImpl;
+        this.userRepository = userRepository;
     }
 
     @GetMapping
@@ -41,13 +46,21 @@ public class UserResource {
 
     @PostMapping
     public ResponseEntity<UserDTO> insert(@RequestBody UserDTO newUserDTO) {
-        UserDTO userDTO = this.userDetailsServiceImpl.insert(newUserDTO);
-        URI uri = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(userDTO.getId())
-                .toUri();
-        return ResponseEntity.created(uri).body(userDTO);
+        try {
+            this.userRepository.findByUsername(newUserDTO.getUsername()).ifPresent(user -> {
+                throw new Error("Username already exists");
+            });
+
+            UserDTO userDTO = this.userDetailsServiceImpl.insert(newUserDTO);
+            URI uri = ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(userDTO.getId())
+                    .toUri();
+            return ResponseEntity.created(uri).body(userDTO);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping("/{id}")

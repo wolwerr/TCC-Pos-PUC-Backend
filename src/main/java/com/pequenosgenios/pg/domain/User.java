@@ -19,6 +19,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
     private String username;
     private String email;
     private String password;
@@ -26,6 +27,7 @@ public class User {
 
     public User(UserDTO userDTO) {
         this.id = userDTO.getId();
+        this.name = userDTO.getName();
         this.email = userDTO.getEmail();
         this.password = new Argon2PasswordEncoder( 16, 32, 1, 4096, 3).encode(userDTO.getPassword());
         this.role = userDTO.getRole();
