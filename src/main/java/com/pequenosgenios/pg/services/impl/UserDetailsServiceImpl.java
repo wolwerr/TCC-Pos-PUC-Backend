@@ -1,12 +1,13 @@
 package com.pequenosgenios.pg.services.impl;
 
 import com.pequenosgenios.pg.config.UserDetailsImpl;
-import com.pequenosgenios.pg.domain.Teacher;
 import com.pequenosgenios.pg.domain.User;
-import com.pequenosgenios.pg.dto.TeacherDTO;
 import com.pequenosgenios.pg.dto.UserDTO;
+import com.pequenosgenios.pg.email.SendEmailService;
+import com.pequenosgenios.pg.messages.EmailMessages;
 import com.pequenosgenios.pg.repositories.UserRepository;
 import com.pequenosgenios.pg.services.Util;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,9 +16,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
+import java.time.LocalDateTime;
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
   private final UserRepository userRepository;
+
+  @Autowired
+  private SendEmailService sendEmailService;
 
   public UserDetailsServiceImpl(UserRepository userRepository) {
     this.userRepository = userRepository;
@@ -42,10 +49,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   }
 
   @Transactional(rollbackFor = Exception.class)
-  public UserDTO insert(UserDTO newUserDTO) {
+  public UserDTO insert(UserDTO newUserDTO) throws MessagingException {
     User model = new User(newUserDTO);
     model = this.userRepository.save(model);
     newUserDTO.setId(model.getId());
+    try {
+        this.sendEmailService.enviarEmailComAnexo(
+                newUserDTO.getEmail(),
+                EmailMessages.createTitle(newUserDTO),
+                EmailMessages.messageToNewUserLogo(newUserDTO), "/logo/Logogrande.jpg" );
+        } catch (Exception e) {
+        e.printStackTrace();
+        }
     return newUserDTO;
   }
 
