@@ -1,10 +1,7 @@
 package com.pequenosgenios.pg.domain;
 
-import com.pequenosgenios.pg.dto.PersonDTO;
 import com.pequenosgenios.pg.dto.UserDTO;
 import lombok.*;
-import org.bouncycastle.crypto.generators.Argon2BytesGenerator;
-import org.bouncycastle.crypto.params.Argon2Parameters;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 
 import javax.persistence.*;

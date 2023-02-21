@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
-import java.time.LocalDateTime;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -62,6 +61,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         e.printStackTrace();
         }
     return newUserDTO;
+  }
+
+  @Transactional(rollbackFor = Exception.class)
+  public UserDTO enviarSenha(String userName, Pageable pageable) throws MessagingException {
+    UserDTO userDTO = new UserDTO(this.findByUsername(userName));
+    this.userRepository.findByUsername(userDTO.getEmail());
+    try {
+      this.sendEmailService.enviarEmailComAnexoRecuperarSenha(
+              userDTO.getEmail(),
+              EmailMessages.createTitle(userDTO),
+              EmailMessages.messageToNewUserLogo(userDTO), "/logo/Logogrande.jpg" );
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return userDTO;
   }
 
   @Transactional(readOnly = true)

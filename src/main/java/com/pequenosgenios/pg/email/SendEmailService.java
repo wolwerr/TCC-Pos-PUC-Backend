@@ -41,6 +41,21 @@ public class SendEmailService {
         helper.setTo(para);
         helper.setSubject(titulo);
         helper.setText(conteudo, true);
+        helper.addAttachment("Logogrande.jpg", new ClassPathResource(logo));
+
+        envioEmailDoJava.send(mensagem);
+        log.info("Email com anexo enviado com sucesso");
+    }
+
+    public void enviarEmailComAnexoRecuperarSenha(String para, String titulo, String conteudo, String logo)
+            throws MessagingException {
+        log.info("Sendind email to confirm the data..");
+        var mensagem = envioEmailDoJava.createMimeMessage();
+        var helper = new MimeMessageHelper(mensagem, true); // html definido
+
+        helper.setTo(para);
+        helper.setSubject(titulo);
+        helper.setText(conteudo, true);
 
 
         helper.addAttachment("Logogrande.jpg", new ClassPathResource(logo));
