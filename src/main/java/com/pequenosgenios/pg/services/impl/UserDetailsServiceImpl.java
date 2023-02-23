@@ -70,8 +70,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     try {
       this.sendEmailService.enviarEmailComAnexoRecuperarSenha(
               userDTO.getEmail(),
-              EmailMessages.createTitle(userDTO),
-              EmailMessages.messageToNewUserLogo(userDTO), "/logo/Logogrande.jpg" );
+              EmailMessages.createTitleSenha(userDTO),
+              EmailMessages.recuperarDados(userDTO), "/logo/Logogrande.jpg" );
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -90,6 +90,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   @Transactional(rollbackFor = Exception.class)
   public UserDTO update(Long id, UserDTO userDTO) {
+    UserDTO fromDatabase = this.findById(id);
+    Util.myCopyProperties(userDTO, fromDatabase);
+    this.userRepository.save(new User(fromDatabase));
+    return userDTO;
+  }
+
+  @Transactional(rollbackFor = Exception.class)
+  public UserDTO trocarSenha(Long id, UserDTO userDTO) {
     UserDTO fromDatabase = this.findById(id);
     Util.myCopyProperties(userDTO, fromDatabase);
     this.userRepository.save(new User(fromDatabase));

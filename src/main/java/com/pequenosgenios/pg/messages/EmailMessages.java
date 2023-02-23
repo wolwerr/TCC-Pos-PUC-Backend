@@ -4,6 +4,8 @@ package com.pequenosgenios.pg.messages;
 import com.pequenosgenios.pg.domain.User;
 import com.pequenosgenios.pg.dto.UserDTO;
 
+import java.util.Locale;
+
 public class EmailMessages {
 
     public static String createTitle(UserDTO user){
@@ -27,10 +29,15 @@ public class EmailMessages {
                         +"<div>https://tcc-pos-puc-frontend.vercel.app/home</div>";
     }
 
-    public static String recuperarDados(User user){
+    public static String createTitleSenha(UserDTO user){
+        return
+                user.getName().toLowerCase(Locale.ROOT) + ", seguem seus dados!";
+    }
+
+    public static String recuperarDados(UserDTO user){
         return
 
-                "<div>Olá " + user.getName() +"! Seja muito bem-vindo(a) ao Pequenos Gênios. "
+                "<div>Olá " + user.getName() +"! Olá seguem os dados solicitados. "
                         +"<br>"
                         +"Os seus dados e sua senha de acesso estão logo abaixo.</div>"
                         +"<br>"
@@ -38,7 +45,7 @@ public class EmailMessages {
                         +"<div><strong>Nome: <strong>" + user.getName() + "</div>"
                         +"<div><strong>Usuário: <strong>" + user.getUsername() + "</div>"
                         +"<div><strong>E-mail: <strong>" + user.getEmail() + "</div>"
-                        +"<div><strong>Password: <strong>" + user.getPassword() + "</div>"
+                        +"<div><strong>Password: <strong> Para trocar a senha entre em http://localhost:4200/main/trocarSenha/"+ user.getId() + "</div>"
                         +"<div>==============================================================</div>"
                         +"<br>"
                         +"<div>https://tcc-pos-puc-frontend.vercel.app/home</div>";

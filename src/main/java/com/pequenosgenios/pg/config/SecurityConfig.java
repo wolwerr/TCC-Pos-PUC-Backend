@@ -64,6 +64,7 @@ public class SecurityConfig {
                         .antMatchers("/h2-console/**").permitAll()
                         .antMatchers("/class").permitAll()
                         .antMatchers("/user/**").permitAll()
+                        .antMatchers("/trocarSenha/**").permitAll()
                         .anyRequest().authenticated()
         );
 

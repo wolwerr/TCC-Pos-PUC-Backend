@@ -46,6 +46,11 @@ public class UserResource {
         return ResponseEntity.accepted().body(this.userDetailsServiceImpl.update(id, userDTO));
     }
 
+    @PutMapping("trocarSenha/{id}")
+    public ResponseEntity<UserDTO> trocarSenha(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+        return ResponseEntity.accepted().body(this.userDetailsServiceImpl.trocarSenha(id, userDTO));
+    }
+
     @PostMapping
     public ResponseEntity<UserDTO> insert(@RequestBody UserDTO newUserDTO) {
         try {
