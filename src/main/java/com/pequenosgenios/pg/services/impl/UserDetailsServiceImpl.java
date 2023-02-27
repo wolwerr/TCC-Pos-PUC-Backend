@@ -99,6 +99,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   @Transactional(rollbackFor = Exception.class)
   public UserDTO trocarSenha(Long id, UserDTO userDTO) {
     UserDTO fromDatabase = this.findById(id);
+    if(id == null){
+      throw new RuntimeException("not found");
+    }
+//    if (userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
+//      Util.myCopyProperties(userDTO, fromDatabase);
+//      this.userRepository.save(new User(fromDatabase));
+//    }
     Util.myCopyProperties(userDTO, fromDatabase);
     this.userRepository.save(new User(fromDatabase));
     return userDTO;

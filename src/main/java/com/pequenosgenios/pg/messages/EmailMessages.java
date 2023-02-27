@@ -1,9 +1,6 @@
 package com.pequenosgenios.pg.messages;
 
-
-import com.pequenosgenios.pg.domain.User;
 import com.pequenosgenios.pg.dto.UserDTO;
-
 import java.util.Locale;
 
 public class EmailMessages {

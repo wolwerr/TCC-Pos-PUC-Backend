@@ -33,5 +33,4 @@ public class UserDTO {
         this.role = user.getRole();
         this.username = user.getUsername();
    }
-
 }

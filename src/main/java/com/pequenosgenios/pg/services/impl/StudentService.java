@@ -25,7 +25,6 @@ public class StudentService {
         newStudentDTO.setId(model.getId());
         return newStudentDTO;
     }
-
     @Transactional(readOnly = true)
     public Page<StudentDTO> findAll(Pageable pageable) {
         return this.studentRepository.findAll(pageable).map(StudentDTO::new);
@@ -38,7 +37,6 @@ public class StudentService {
 
     @Transactional(rollbackFor = Exception.class)
     public StudentDTO update(Long id, StudentDTO studentDTO) {
-
         StudentDTO fromDatabase = this.findById(id);
         Util.myCopyProperties(studentDTO, fromDatabase);
         this.studentRepository.save(new Student(fromDatabase));
