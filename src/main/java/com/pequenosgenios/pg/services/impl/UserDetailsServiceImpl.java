@@ -7,7 +7,6 @@ import com.pequenosgenios.pg.email.SendEmailService;
 import com.pequenosgenios.pg.messages.EmailMessages;
 import com.pequenosgenios.pg.repositories.UserRepository;
 import com.pequenosgenios.pg.services.Util;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,15 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
   private final UserRepository userRepository;
-
-  @Autowired
-  private SendEmailService sendEmailService;
-
-  public UserDetailsServiceImpl(UserRepository userRepository) {
+  private final SendEmailService sendEmailService;
+  public SendEmailService getSendEmailService() {
+        return sendEmailService;
+    }
+  public UserDetailsServiceImpl(UserRepository userRepository, SendEmailService sendEmailService) {
     this.userRepository = userRepository;
+    this.sendEmailService = sendEmailService;
   }
 
   @Transactional
@@ -53,7 +54,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     model = this.userRepository.save(model);
     newUserDTO.setId(model.getId());
     try {
-        this.sendEmailService.enviarEmailComAnexo(
+        this.getSendEmailService().enviarEmailComAnexo(
                 newUserDTO.getEmail(),
                 EmailMessages.createTitle(newUserDTO),
                 EmailMessages.messageToNewUserLogo(newUserDTO), "/logo/Logogrande.jpg" );
@@ -68,7 +69,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     UserDTO userDTO = new UserDTO(this.findByUsername(userName));
     this.userRepository.findByUsername(userDTO.getEmail());
     try {
-      this.sendEmailService.enviarEmailComAnexoRecuperarSenha(
+      this.getSendEmailService().enviarEmailComAnexoRecuperarSenha(
               userDTO.getEmail(),
               EmailMessages.createTitleSenha(userDTO),
               EmailMessages.recuperarDados(userDTO), "/logo/Logogrande.jpg" );
