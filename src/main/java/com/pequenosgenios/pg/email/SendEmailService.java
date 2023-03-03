@@ -17,7 +17,7 @@ public class SendEmailService {
         this.envioEmailDoJava = javaMailSender;
     }
 
-    public void enviarEmailComAnexo(String para, String titulo, String conteudo, String logo)
+    public void enviarEmailComAnexoNovoCadastro(String para, String titulo, String conteudo, String logo)
             throws MessagingException {
         log.info("Sendind email to confirm the data..");
         var mensagem = envioEmailDoJava.createMimeMessage();

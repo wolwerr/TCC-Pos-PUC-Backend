@@ -9,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import javax.mail.MessagingException;
 import java.net.URI;
 
 @RestController
@@ -36,9 +34,9 @@ public class UserResource {
     }
 
     @GetMapping("/userName/{userName}")
-    public ResponseEntity<UserDTO> findByName(@PathVariable String userName, Pageable pageable) throws MessagingException {
-        this.userDetailsServiceImpl.findByUserName(userName, pageable);
-        return ResponseEntity.ok(this.userDetailsServiceImpl.enviarSenha(userName, pageable));
+    public ResponseEntity<UserDTO> findByName(@PathVariable String userName)  {
+        this.userDetailsServiceImpl.findByUsername(userName);
+        return ResponseEntity.ok(this.userDetailsServiceImpl.enviarSenha(userName));
     }
 
     @PutMapping("/{id}")

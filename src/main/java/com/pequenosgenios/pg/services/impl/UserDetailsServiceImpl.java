@@ -30,11 +30,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     this.sendEmailService = sendEmailService;
   }
 
-  @Transactional
-  public User save(User user) {
-    return userRepository.save(user);
-  }
-
   @Transactional(readOnly = true)
   public User findByUsername(String username) {
     return userRepository.findByUsername(username)
@@ -54,7 +49,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     model = this.userRepository.save(model);
     newUserDTO.setId(model.getId());
     try {
-        this.getSendEmailService().enviarEmailComAnexo(
+        this.getSendEmailService().enviarEmailComAnexoNovoCadastro(
                 newUserDTO.getEmail(),
                 EmailMessages.createTitle(newUserDTO),
                 EmailMessages.messageToNewUserLogo(newUserDTO), "/logo/Logogrande.jpg" );
@@ -65,7 +60,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   }
 
   @Transactional(rollbackFor = Exception.class)
-  public UserDTO enviarSenha(String userName, Pageable pageable) throws MessagingException {
+  public UserDTO enviarSenha(String userName){
     UserDTO userDTO = new UserDTO(this.findByUsername(userName));
     this.userRepository.findByUsername(userDTO.getEmail());
     try {
@@ -73,7 +68,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
               userDTO.getEmail(),
               EmailMessages.createTitleSenha(userDTO),
               EmailMessages.recuperarDados(userDTO), "/logo/Logogrande.jpg" );
-    } catch (Exception e) {
+    } catch ( Exception e) {
       e.printStackTrace();
     }
     return userDTO;
@@ -120,10 +115,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   protected User findModel(Long id) {
     return this.userRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("not found"));
-  }
-
-  public Page<UserDTO> findByUserName(String userName, Pageable pageable) {
-    return this.userRepository.findAllByUsernameContainsIgnoreCase(userName, pageable).map(UserDTO::new);
   }
 
 }
