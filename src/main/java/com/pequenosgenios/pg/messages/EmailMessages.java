@@ -13,7 +13,7 @@ public class EmailMessages {
 
     public static String createTitleContact(ContactDTO contact){
         return
-                contact.getName() + " seu cadastro foi recebido!";
+              contact.getName() + " o seu contato foi recebido!";
     }
     public static String messageToNewUserLogo(UserDTO user){
         return
@@ -22,12 +22,12 @@ public class EmailMessages {
                         +"<br>"
                         +"Os seus dados e sua senha de acesso estão logo abaixo.</div>"
                         +"<br>"
-                        +"<div>===============================================================</div>"
+                        +"<div>==============================================================</div>"
                         +"<div><strong>Nome: <strong>" + user.getName() + "</div>"
                         +"<div><strong>Usuário: <strong>" + user.getUsername() + "</div>"
                         +"<div><strong>E-mail: <strong>" + user.getEmail() + "</div>"
                         +"<div><strong>Password: <strong>" + user.getPassword() + "</div>"
-                        +"<div>==============================================================</div>"
+                        +"<div>=============================================================</div>"
                         +"<br>"
                         +"<div>https://tcc-pos-puc-frontend.vercel.app/home</div>";
     }
@@ -44,12 +44,12 @@ public class EmailMessages {
                         +"<br>"
                         +"Os seus dados e sua senha de acesso estão logo abaixo.</div>"
                         +"<br>"
-                        +"<div>===============================================================</div>"
+                        +"<div>==============================================================</div>"
                         +"<div><strong>Nome: <strong>" + user.getName() + "</div>"
                         +"<div><strong>Usuário: <strong>" + user.getUsername() + "</div>"
                         +"<div><strong>E-mail: <strong>" + user.getEmail() + "</div>"
                         +"<div><strong>Password: <strong> Para trocar a senha entre em https://tcc-pos-puc-frontend.vercel.app/main/trocarSenha/"+ user.getId() + "</div>"
-                        +"<div>==============================================================</div>"
+                        +"<div>=============================================================</div>"
                         +"<br>"
                         +"<div>https://tcc-pos-puc-frontend.vercel.app/home</div>";
     }
@@ -61,13 +61,13 @@ public class EmailMessages {
                         +"<br>"
                         +"Os seus dados estão logo abaixo.</div>"
                         +"<br>"
-                        +"<div>===============================================================</div>"
+                        +"<div>==============================================================</div>"
                         +"<div><strong>Nome: <strong>" + contact.getName() + "</div>"
                         +"<div><strong>Usuário: <strong>" + contact.getEmail() + "</div>"
                         +"<div><strong>Título: <strong>" + contact.getSubject() + "</div>"
                         +"<div><strong>Mensagem: <strong>" + contact.getMessage() + "</div>"
-                        +"<div>Responder o mais rápido possível</div>"
-                        +"<div>==============================================================</div>"
+                        +"<div>Retornaremos o mais rápido possível</div>"
+                        +"<div>=============================================================</div>"
                         +"<br>"
                         +"<div>https://tcc-pos-puc-frontend.vercel.app/home</div>";
     }

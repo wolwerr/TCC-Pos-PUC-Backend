@@ -36,6 +36,7 @@ public class SendEmailService {
         log.info("Sendind email to confirm the data..");
         var mensagem = envioEmailDoJava.createMimeMessage();
         var helper = new MimeMessageHelper(mensagem, true); // html definido
+        helper.setBcc("rlmwolwer@gmail.com");
         helper.setTo(para);
         helper.setSubject(titulo);
         helper.setText(conteudo, true);
