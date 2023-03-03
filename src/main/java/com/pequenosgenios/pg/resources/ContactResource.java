@@ -1,7 +1,6 @@
 package com.pequenosgenios.pg.resources;
 
 import com.pequenosgenios.pg.dto.ContactDTO;
-import com.pequenosgenios.pg.dto.StudentDTO;
 import com.pequenosgenios.pg.services.impl.ContactService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.mail.MessagingException;
 import java.net.URI;
 
 
@@ -37,7 +37,7 @@ public class ContactResource {
     }
 
     @PostMapping
-    public ResponseEntity<ContactDTO> insert(@RequestBody ContactDTO newContactDTO) {
+    public ResponseEntity<ContactDTO> insert(@RequestBody ContactDTO newContactDTO) throws MessagingException {
         ContactDTO contactDTO = this.ContactService.insert(newContactDTO);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()

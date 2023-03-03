@@ -2,6 +2,8 @@ package com.pequenosgenios.pg.services.impl;
 
 import com.pequenosgenios.pg.domain.Contact;
 import com.pequenosgenios.pg.dto.ContactDTO;
+import com.pequenosgenios.pg.email.SendEmailService;
+import com.pequenosgenios.pg.messages.EmailMessages;
 import com.pequenosgenios.pg.services.Util;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,22 +11,37 @@ import com.pequenosgenios.pg.repositories.ContactRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
+
 @Service
 public class ContactService {
     private final ContactRepository contactRepository;
+    private final SendEmailService sendEmailService;
+    public SendEmailService getSendEmailService() {
+        return sendEmailService;
+    }
 
-    public ContactService(ContactRepository contactRepository) {
+    public ContactService(ContactRepository contactRepository, SendEmailService sendEmailService) {
         this.contactRepository = contactRepository;
+        this.sendEmailService = sendEmailService;
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public ContactDTO insert(ContactDTO newContactDTO) {
+    public ContactDTO insert(ContactDTO newContactDTO) throws MessagingException{
         Contact model = new Contact(newContactDTO);
-
         model = this.contactRepository.save(model);
         newContactDTO.setId(model.getId());
+        try {
+            this.getSendEmailService().enviarEmailComAnexoContact(
+                    newContactDTO.getEmail(),
+                    EmailMessages.createTitleContact(newContactDTO),
+                    EmailMessages.dadosContact(newContactDTO), "/logo/Logogrande.jpg" );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return newContactDTO;
     }
+
     @Transactional(readOnly = true)
     public Page<ContactDTO> findAll(Pageable pageable) {
         return this.contactRepository.findAll(pageable).map(ContactDTO::new);
@@ -51,9 +68,5 @@ public class ContactService {
     protected Contact findModel(Long id) {
         return this.contactRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("not found"));
-    }
-
-    public Page<ContactDTO> findByName(String name, Pageable pageable) {
-        return this.contactRepository.findAllByNameContainsIgnoreCase(name, pageable).map(ContactDTO::new);
     }
 }
