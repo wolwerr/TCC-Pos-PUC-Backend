@@ -42,7 +42,7 @@ public class EmailMessages {
                         +"<div><strong>Nome: <strong>" + user.getName() + "</div>"
                         +"<div><strong>Usuário: <strong>" + user.getUsername() + "</div>"
                         +"<div><strong>E-mail: <strong>" + user.getEmail() + "</div>"
-                        +"<div><strong>Password: <strong> Para trocar a senha entre em http://localhost:4200/main/trocarSenha/"+ user.getId() + "</div>"
+                        +"<div><strong>Password: <strong> Para trocar a senha entre em https://tcc-pos-puc-frontend.vercel.app/main/trocarSenha/"+ user.getId() + "</div>"
                         +"<div>==============================================================</div>"
                         +"<br>"
                         +"<div>https://tcc-pos-puc-frontend.vercel.app/home</div>";
