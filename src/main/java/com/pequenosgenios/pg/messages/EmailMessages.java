@@ -48,7 +48,7 @@ public class EmailMessages {
                         +"<div><strong>Nome: <strong>" + user.getName() + "</div>"
                         +"<div><strong>Usuário: <strong>" + user.getUsername() + "</div>"
                         +"<div><strong>E-mail: <strong>" + user.getEmail() + "</div>"
-                        +"<div><strong>Password: <strong> Para trocar a senha entre em <a href=https://tcc-pos-puc-frontend.vercel.app/main/trocarSenha/"  + user.getId() + "> Clique aqui</a>" + "</div>"
+                        +"<div><strong>Password: <strong> Para trocar a senha <a href=https://tcc-pos-puc-frontend.vercel.app/main/trocarSenha/"  + user.getId() + "> Clique aqui</a>" + "</div>"
                         +"<div>=============================================================</div>"
                         +"<br>"
                         +"<div>https://tcc-pos-puc-frontend.vercel.app/home</div>";
