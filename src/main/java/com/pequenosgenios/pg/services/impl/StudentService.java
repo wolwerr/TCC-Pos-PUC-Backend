@@ -2,6 +2,8 @@ package com.pequenosgenios.pg.services.impl;
 
 import com.pequenosgenios.pg.domain.Student;
 import com.pequenosgenios.pg.dto.StudentDTO;
+import com.pequenosgenios.pg.email.SendEmailService;
+import com.pequenosgenios.pg.messages.EmailMessages;
 import com.pequenosgenios.pg.repositories.StudentRepository;
 import com.pequenosgenios.pg.services.Util;
 import org.springframework.data.domain.Page;
@@ -13,16 +15,30 @@ import org.springframework.transaction.annotation.Transactional;
 public class StudentService {
     private final StudentRepository studentRepository;
 
-    public StudentService(StudentRepository studentRepository) {
+    private final SendEmailService sendEmailService;
+
+    public SendEmailService getSendEmailService() {
+        return sendEmailService;
+    }
+
+    public StudentService(StudentRepository studentRepository, SendEmailService sendEmailService) {
         this.studentRepository = studentRepository;
+        this.sendEmailService = sendEmailService;
     }
 
     @Transactional(rollbackFor = Exception.class)
     public StudentDTO insert(StudentDTO newStudentDTO) {
         Student model = new Student(newStudentDTO);
-
         model = this.studentRepository.save(model);
         newStudentDTO.setId(model.getId());
+        try {
+            this.getSendEmailService().enviarEmailComAnexoNovoCadastro(
+                    newStudentDTO.getEmail(),
+                    EmailMessages.createTitle(newStudentDTO),
+                    EmailMessages.messageToNewUserLogoStudent(newStudentDTO), "/logo/Logogrande.jpg" );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return newStudentDTO;
     }
     @Transactional(readOnly = true)

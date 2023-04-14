@@ -2,6 +2,8 @@ package com.pequenosgenios.pg.services.impl;
 
 import com.pequenosgenios.pg.domain.Teacher;
 import com.pequenosgenios.pg.dto.TeacherDTO;
+import com.pequenosgenios.pg.email.SendEmailService;
+import com.pequenosgenios.pg.messages.EmailMessages;
 import com.pequenosgenios.pg.repositories.TeacherRepository;
 import com.pequenosgenios.pg.services.Util;
 import org.springframework.data.domain.Page;
@@ -12,8 +14,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TeacherService {
     private final TeacherRepository teacherRepository;
-    public TeacherService(TeacherRepository teacherRepository) {
+
+    private final SendEmailService sendEmailService;
+
+    public SendEmailService getSendEmailService() {
+        return sendEmailService;
+    }
+
+    public TeacherService(TeacherRepository teacherRepository, SendEmailService sendEmailService) {
         this.teacherRepository = teacherRepository;
+        this.sendEmailService = sendEmailService;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -21,6 +31,14 @@ public class TeacherService {
         Teacher model = new Teacher(newTeacherDTO);
         model = this.teacherRepository.save(model);
         newTeacherDTO.setId(model.getId());
+        try {
+            this.getSendEmailService().enviarEmailComAnexoNovoCadastro(
+                    newTeacherDTO.getEmail(),
+                    EmailMessages.createTitle(newTeacherDTO),
+                    EmailMessages.messageToNewUserLogoTeacher(newTeacherDTO), "/logo/Logogrande.jpg" );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return newTeacherDTO;
     }
 

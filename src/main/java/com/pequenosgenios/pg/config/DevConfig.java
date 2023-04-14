@@ -1,7 +1,6 @@
 package com.pequenosgenios.pg.config;
 
 import com.pequenosgenios.pg.services.impl.DBService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.text.ParseException;
@@ -10,8 +9,11 @@ import java.text.ParseException;
 //@Profile("dev")
 public class DevConfig {
 
-    @Autowired
-    private DBService dbService;
+    private final DBService dbService;
+
+    public DevConfig(DBService dbService) {
+        this.dbService = dbService;
+    }
 
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String strategy;

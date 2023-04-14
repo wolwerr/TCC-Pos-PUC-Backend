@@ -1,6 +1,8 @@
 package com.pequenosgenios.pg.messages;
 
 import com.pequenosgenios.pg.dto.ContactDTO;
+import com.pequenosgenios.pg.dto.StudentDTO;
+import com.pequenosgenios.pg.dto.TeacherDTO;
 import com.pequenosgenios.pg.dto.UserDTO;
 import java.util.Locale;
 
@@ -9,6 +11,16 @@ public class EmailMessages {
     public static String createTitle(UserDTO user){
         return
                 user.getName() + " seu cadastro foi recebido!";
+    }
+
+    public static String createTitle(StudentDTO student){
+        return
+                student.getName() + " seu cadastro foi recebido!";
+    }
+
+    public static String createTitle(TeacherDTO teacher){
+        return
+                teacher.getName() + " seu cadastro foi recebido!";
     }
 
     public static String createTitleContact(ContactDTO contact){
@@ -20,7 +32,7 @@ public class EmailMessages {
 
                 "<div>Olá " + user.getName() +"! Seja muito bem-vindo(a) ao Pequenos Gênios. "
                         +"<br>"
-                        +"Os seus dados e sua senha de acesso estão logo abaixo.</div>"
+                        +"Os seus dados e sua senha de acesso estão logo abaixo:</div>"
                         +"<br>"
                         +"<div>==============================================================</div>"
                         +"<div><strong>Nome: <strong>" + user.getName() + "</div>"
@@ -32,9 +44,43 @@ public class EmailMessages {
                         +"<div>https://tcc-pos-puc-frontend.vercel.app/home</div>";
     }
 
+    public static String messageToNewUserLogoStudent(StudentDTO student){
+        return
+
+                "<div>Olá " + student.getName() +"! Seja muito bem-vindo(a) ao Pequenos Gênios. "
+                        +"<br>"
+                        +"Os dados cadastrados estão logo abaixo:</div>"
+                        +"<br>"
+                        +"<div>==============================================================</div>"
+                        +"<div><strong>Nome: <strong>" + student.getName() + "</div>"
+                        +"<div><strong>Telefone: <strong>" + student.getPhone() + "</div>"
+                        +"<div><strong>E-mail: <strong>" + student.getEmail() + "</div>"
+                        +"<div><strong>Mensalidade: <strong>" + student.getFees() + "</div>"
+                        +"<div>=============================================================</div>"
+                        +"<br>"
+                        +"<div>https://tcc-pos-puc-frontend.vercel.app/home</div>";
+    }
+
+    public static String messageToNewUserLogoTeacher(TeacherDTO teacher){
+        return
+
+                "<div>Olá " + teacher.getName() +"! Seja muito bem-vindo(a) ao Pequenos Gênios. "
+                        +"<br>"
+                        +"Os dados cadastrados estão logo abaixo:</div>"
+                        +"<br>"
+                        +"<div>==============================================================</div>"
+                        +"<div><strong>Nome: <strong>" + teacher.getName() + "</div>"
+                        +"<div><strong>Telefone: <strong>" + teacher.getPhone() + "</div>"
+                        +"<div><strong>E-mail: <strong>" + teacher.getEmail() + "</div>"
+                        +"<div><strong>Mensalidade: <strong>" + teacher.getSalary() + "</div>"
+                        +"<div>=============================================================</div>"
+                        +"<br>"
+                        +"<div>https://tcc-pos-puc-frontend.vercel.app/home</div>";
+    }
+
     public static String createTitleSenha(UserDTO user){
         return
-                user.getName().toLowerCase(Locale.ROOT) + ", seguem seus dados!";
+                user.getName().toLowerCase(Locale.ROOT) + ", seguem seus dados de acesso!";
     }
 
     public static String recuperarDados(UserDTO user){
@@ -42,7 +88,7 @@ public class EmailMessages {
 
                 "<div>Olá " + user.getName() +"! Olá seguem os dados solicitados. "
                         +"<br>"
-                        +"Os seus dados e sua senha de acesso estão logo abaixo.</div>"
+                        +"Os seus dados e sua senha de acesso estão logo abaixo:</div>"
                         +"<br>"
                         +"<div>==============================================================</div>"
                         +"<div><strong>Nome: <strong>" + user.getName() + "</div>"
@@ -59,7 +105,7 @@ public class EmailMessages {
 
                 "<div>Olá o Senhor(a) " + contact.getName() +" enviou uma mensagem. "
                         +"<br>"
-                        +"Os seus dados estão logo abaixo.</div>"
+                        +"Os seus dados estão logo abaixo:</div>"
                         +"<br>"
                         +"<div>==============================================================</div>"
                         +"<div><strong>Nome: <strong>" + contact.getName() + "</div>"
