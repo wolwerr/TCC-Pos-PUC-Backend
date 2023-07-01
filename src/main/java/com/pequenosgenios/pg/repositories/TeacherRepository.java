@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 
-    List<Teacher> findByEmail(String email);
+    boolean existsByEmail(String email);
 
     Page<Teacher> findAllByNameContainsIgnoreCase(String name, Pageable pageable);
 }

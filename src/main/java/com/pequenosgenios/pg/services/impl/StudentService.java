@@ -28,6 +28,10 @@ public class StudentService {
 
     @Transactional(rollbackFor = Exception.class)
     public StudentDTO insert(StudentDTO newStudentDTO) {
+        String email = newStudentDTO.getEmail();
+        if (this.studentRepository.existsByEmail(email)) {
+            throw new RuntimeException("Email already exists");
+        }
         Student model = new Student(newStudentDTO);
         model = this.studentRepository.save(model);
         newStudentDTO.setId(model.getId());

@@ -28,6 +28,10 @@ public class TeacherService {
 
     @Transactional(rollbackFor = Exception.class)
     public TeacherDTO insert(TeacherDTO newTeacherDTO) {
+        String email = newTeacherDTO.getEmail();
+        if (this.teacherRepository.existsByEmail(email)) {
+            throw new RuntimeException("Email already exists");
+        }
         Teacher model = new Teacher(newTeacherDTO);
         model = this.teacherRepository.save(model);
         newTeacherDTO.setId(model.getId());

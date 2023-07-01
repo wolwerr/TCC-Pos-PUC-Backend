@@ -17,6 +17,10 @@ public class PersonService {
 
     @Transactional(rollbackFor = Exception.class)
     public PersonDTO insert(PersonDTO personDTO) {
+        String email = personDTO.getEmail();
+        if (this.personRepository.existsByEmail(email)) {
+            throw new RuntimeException("Email already exists");
+        }
         Person model = new Person(personDTO);
         model = this.personRepository.save(model);
         personDTO.setId(model.getId());

@@ -45,6 +45,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   @Transactional(rollbackFor = Exception.class)
   public UserDTO insert(UserDTO newUserDTO) throws MessagingException {
+    String email = newUserDTO.getEmail();
+    if (this.userRepository.existsByEmail(email)) {
+      throw new RuntimeException("Email already exists");
+    }
     User model = new User(newUserDTO);
     model = this.userRepository.save(model);
     newUserDTO.setId(model.getId());
@@ -86,6 +90,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   @Transactional(rollbackFor = Exception.class)
   public UserDTO update(Long id, UserDTO userDTO) {
+    String username = userDTO.getUsername();
+    if (this.userRepository.existsByUsername(username)) {
+      throw new RuntimeException("Username already exists");
+    }
     UserDTO fromDatabase = this.findById(id);
     Util.myCopyProperties(userDTO, fromDatabase);
     this.userRepository.save(new User(fromDatabase));
