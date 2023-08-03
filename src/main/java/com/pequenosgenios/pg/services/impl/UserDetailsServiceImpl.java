@@ -23,7 +23,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   private final UserRepository userRepository;
   private final SendEmailService sendEmailService;
   public SendEmailService getSendEmailService() {
-        return sendEmailService;
+
+    return sendEmailService;
     }
   public UserDetailsServiceImpl(UserRepository userRepository, SendEmailService sendEmailService) {
     this.userRepository = userRepository;
@@ -90,10 +91,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   @Transactional(rollbackFor = Exception.class)
   public UserDTO update(Long id, UserDTO userDTO) {
-    String username = userDTO.getUsername();
-    if (this.userRepository.existsByUsername(username)) {
-      throw new RuntimeException("Username already exists");
-    }
     UserDTO fromDatabase = this.findById(id);
     Util.myCopyProperties(userDTO, fromDatabase);
     this.userRepository.save(new User(fromDatabase));
